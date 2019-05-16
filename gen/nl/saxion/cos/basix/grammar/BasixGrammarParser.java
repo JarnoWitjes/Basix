@@ -19,8 +19,7 @@ public class BasixGrammarParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, OP=19, VALUE=20, TEXT=21, VARIABLE_NAME=22, BEGIN=23, END=24, 
-		WS=25;
+		OP=18, VALUE=19, TEXT=20, VARIABLE_NAME=21, BEGIN=22, END=23, WS=24;
 	public static final int
 		RULE_program = 0, RULE_expression = 1, RULE_print = 2, RULE_variable = 3, 
 		RULE_when = 4, RULE_loopwhen = 5, RULE_bool_expr = 6, RULE_math_expr = 7;
@@ -35,16 +34,16 @@ public class BasixGrammarParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'print'", "'::'", "'integer'", "'text'", "'<<'", "';'", "'make_known'", 
-			"' ::'", "'remake_known'", "'get_known'", "'when'", "'('", "'AND'", "'OR'", 
-			"')'", "'then'", "'otherwise'", "'loop_when'", null, null, null, null, 
-			"'BASIX_BEGIN'", "'BASIX_END'"
+			"'remake_known'", "'get_known'", "'when'", "'('", "'AND'", "'OR'", "')'", 
+			"'then'", "'otherwise'", "'loop_when'", null, null, null, null, "'BASIX_BEGIN'", 
+			"'BASIX_END'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, "OP", "VALUE", "TEXT", "VARIABLE_NAME", 
+			null, null, null, null, null, null, "OP", "VALUE", "TEXT", "VARIABLE_NAME", 
 			"BEGIN", "END", "WS"
 		};
 	}
@@ -132,7 +131,7 @@ public class BasixGrammarParser extends Parser {
 			setState(20);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__17))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__16))) != 0)) {
 				{
 				{
 				setState(17);
@@ -199,22 +198,22 @@ public class BasixGrammarParser extends Parser {
 				}
 				break;
 			case T__6:
+			case T__7:
 			case T__8:
-			case T__9:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(27);
 				variable();
 				}
 				break;
-			case T__10:
+			case T__9:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(28);
 				when();
 				}
 				break;
-			case T__17:
+			case T__16:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(29);
@@ -237,10 +236,8 @@ public class BasixGrammarParser extends Parser {
 	}
 
 	public static class PrintContext extends ParserRuleContext {
-		public Token intT;
-		public Token stringT;
-		public Token intV;
-		public Token stringV;
+		public Token type;
+		public Token value;
 		public VariableContext variable() {
 			return getRuleContext(VariableContext.class,0);
 		}
@@ -276,13 +273,13 @@ public class BasixGrammarParser extends Parser {
 			case T__2:
 				{
 				setState(34);
-				((PrintContext)_localctx).intT = match(T__2);
+				((PrintContext)_localctx).type = match(T__2);
 				}
 				break;
 			case T__3:
 				{
 				setState(35);
-				((PrintContext)_localctx).stringT = match(T__3);
+				((PrintContext)_localctx).type = match(T__3);
 				}
 				break;
 			default:
@@ -296,7 +293,7 @@ public class BasixGrammarParser extends Parser {
 			case 1:
 				{
 				setState(39);
-				((PrintContext)_localctx).intV = match(VALUE);
+				((PrintContext)_localctx).value = match(VALUE);
 				setState(40);
 				match(T__5);
 				}
@@ -304,7 +301,7 @@ public class BasixGrammarParser extends Parser {
 			case 2:
 				{
 				setState(41);
-				((PrintContext)_localctx).stringV = match(TEXT);
+				((PrintContext)_localctx).value = match(TEXT);
 				setState(42);
 				match(T__5);
 				}
@@ -351,14 +348,13 @@ public class BasixGrammarParser extends Parser {
 		}
 	}
 	public static class RDEFVARContext extends VariableContext {
-		public Token stringV;
-		public Token intV;
+		public Token varValue;
 		public TerminalNode VARIABLE_NAME() { return getToken(BasixGrammarParser.VARIABLE_NAME, 0); }
 		public Math_exprContext math_expr() {
 			return getRuleContext(Math_exprContext.class,0);
 		}
-		public TerminalNode VALUE() { return getToken(BasixGrammarParser.VALUE, 0); }
 		public TerminalNode TEXT() { return getToken(BasixGrammarParser.TEXT, 0); }
+		public TerminalNode VALUE() { return getToken(BasixGrammarParser.VALUE, 0); }
 		public RDEFVARContext(VariableContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
@@ -367,10 +363,8 @@ public class BasixGrammarParser extends Parser {
 		}
 	}
 	public static class DEFVARContext extends VariableContext {
-		public Token intT;
-		public Token stringT;
-		public Token intV;
-		public Token stringV;
+		public Token type;
+		public Token value;
 		public TerminalNode VARIABLE_NAME() { return getToken(BasixGrammarParser.VARIABLE_NAME, 0); }
 		public Math_exprContext math_expr() {
 			return getRuleContext(Math_exprContext.class,0);
@@ -408,20 +402,20 @@ public class BasixGrammarParser extends Parser {
 				setState(51);
 				match(T__6);
 				setState(52);
-				match(T__7);
+				match(T__1);
 				setState(55);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case T__2:
 					{
 					setState(53);
-					((DEFVARContext)_localctx).intT = match(T__2);
+					((DEFVARContext)_localctx).type = match(T__2);
 					}
 					break;
 				case T__3:
 					{
 					setState(54);
-					((DEFVARContext)_localctx).stringT = match(T__3);
+					((DEFVARContext)_localctx).type = match(T__3);
 					}
 					break;
 				default:
@@ -439,13 +433,13 @@ public class BasixGrammarParser extends Parser {
 				case 1:
 					{
 					setState(60);
-					((DEFVARContext)_localctx).intV = match(VALUE);
+					((DEFVARContext)_localctx).value = match(VALUE);
 					}
 					break;
 				case 2:
 					{
 					setState(61);
-					((DEFVARContext)_localctx).stringV = match(TEXT);
+					((DEFVARContext)_localctx).value = match(TEXT);
 					}
 					break;
 				case 3:
@@ -459,12 +453,12 @@ public class BasixGrammarParser extends Parser {
 				match(T__5);
 				}
 				break;
-			case T__8:
+			case T__7:
 				_localctx = new RDEFVARContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(66);
-				match(T__8);
+				match(T__7);
 				setState(67);
 				match(T__1);
 				setState(68);
@@ -477,13 +471,13 @@ public class BasixGrammarParser extends Parser {
 				case 1:
 					{
 					setState(70);
-					((RDEFVARContext)_localctx).stringV = match(VALUE);
+					((RDEFVARContext)_localctx).varValue = match(TEXT);
 					}
 					break;
 				case 2:
 					{
 					setState(71);
-					((RDEFVARContext)_localctx).intV = match(TEXT);
+					((RDEFVARContext)_localctx).varValue = match(VALUE);
 					}
 					break;
 				case 3:
@@ -497,12 +491,12 @@ public class BasixGrammarParser extends Parser {
 				match(T__5);
 				}
 				break;
-			case T__9:
+			case T__8:
 				_localctx = new GETVARContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(76);
-				match(T__9);
+				match(T__8);
 				setState(77);
 				match(T__1);
 				setState(78);
@@ -561,9 +555,9 @@ public class BasixGrammarParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(82);
-			match(T__10);
+			match(T__9);
 			setState(83);
-			match(T__11);
+			match(T__10);
 			setState(89);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
@@ -579,7 +573,7 @@ public class BasixGrammarParser extends Parser {
 				bool_expr();
 				setState(86);
 				_la = _input.LA(1);
-				if ( !(_la==T__12 || _la==T__13) ) {
+				if ( !(_la==T__11 || _la==T__12) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -593,17 +587,17 @@ public class BasixGrammarParser extends Parser {
 				break;
 			}
 			setState(91);
-			match(T__14);
+			match(T__13);
 			setState(92);
 			match(T__5);
 			setState(93);
-			match(T__15);
+			match(T__14);
 			setState(94);
-			match(T__11);
+			match(T__10);
 			setState(98);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__17))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__16))) != 0)) {
 				{
 				{
 				setState(95);
@@ -615,7 +609,7 @@ public class BasixGrammarParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(101);
-			match(T__14);
+			match(T__13);
 			setState(117);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
@@ -630,18 +624,18 @@ public class BasixGrammarParser extends Parser {
 				setState(103);
 				match(T__5);
 				setState(104);
-				match(T__16);
+				match(T__15);
 				setState(115);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
-				case T__11:
+				case T__10:
 					{
 					setState(105);
-					match(T__11);
+					match(T__10);
 					setState(109);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-					while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__17))) != 0)) {
+					while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__16))) != 0)) {
 						{
 						{
 						setState(106);
@@ -653,12 +647,12 @@ public class BasixGrammarParser extends Parser {
 						_la = _input.LA(1);
 					}
 					setState(112);
-					match(T__14);
+					match(T__13);
 					setState(113);
 					match(T__5);
 					}
 					break;
-				case T__10:
+				case T__9:
 					{
 					setState(114);
 					when();
@@ -712,23 +706,23 @@ public class BasixGrammarParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(119);
-			match(T__17);
+			match(T__16);
 			setState(120);
-			match(T__11);
+			match(T__10);
 			setState(121);
 			bool_expr();
 			setState(122);
-			match(T__14);
+			match(T__13);
 			setState(123);
 			match(T__5);
 			setState(124);
-			match(T__15);
+			match(T__14);
 			setState(125);
-			match(T__11);
+			match(T__10);
 			setState(129);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__17))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__16))) != 0)) {
 				{
 				{
 				setState(126);
@@ -740,7 +734,7 @@ public class BasixGrammarParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(132);
-			match(T__14);
+			match(T__13);
 			setState(133);
 			match(T__5);
 			}
@@ -800,8 +794,8 @@ public class BasixGrammarParser extends Parser {
 				}
 				break;
 			case T__6:
+			case T__7:
 			case T__8:
-			case T__9:
 				{
 				setState(136);
 				((Bool_exprContext)_localctx).lVar = variable();
@@ -822,8 +816,8 @@ public class BasixGrammarParser extends Parser {
 				}
 				break;
 			case T__6:
+			case T__7:
 			case T__8:
-			case T__9:
 				{
 				setState(141);
 				((Bool_exprContext)_localctx).rVar = variable();
@@ -886,8 +880,8 @@ public class BasixGrammarParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__6:
+			case T__7:
 			case T__8:
-			case T__9:
 				{
 				setState(144);
 				((Math_exprContext)_localctx).lVar = variable();
@@ -940,7 +934,7 @@ public class BasixGrammarParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u009d\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u009d\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\7\2\25"+
 		"\n\2\f\2\16\2\30\13\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3!\n\3\3\4\3\4\3\4"+
 		"\3\4\5\4\'\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\64\n\4"+
@@ -951,40 +945,39 @@ public class BasixGrammarParser extends Parser {
 		"\5\6x\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\7\7\u0082\n\7\f\7\16\7\u0085"+
 		"\13\7\3\7\3\7\3\7\3\b\3\b\5\b\u008c\n\b\3\b\3\b\3\b\5\b\u0091\n\b\3\t"+
 		"\3\t\5\t\u0095\n\t\3\t\3\t\3\t\3\t\5\t\u009b\n\t\3\t\2\2\n\2\4\6\b\n\f"+
-		"\16\20\2\3\3\2\17\20\2\u00ae\2\22\3\2\2\2\4 \3\2\2\2\6\"\3\2\2\2\bR\3"+
+		"\16\20\2\3\3\2\16\17\2\u00ae\2\22\3\2\2\2\4 \3\2\2\2\6\"\3\2\2\2\bR\3"+
 		"\2\2\2\nT\3\2\2\2\fy\3\2\2\2\16\u008b\3\2\2\2\20\u0094\3\2\2\2\22\26\7"+
-		"\31\2\2\23\25\5\4\3\2\24\23\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27"+
-		"\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\32\2\2\32\33\7\2\2\3\33\3"+
+		"\30\2\2\23\25\5\4\3\2\24\23\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27"+
+		"\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\31\2\2\32\33\7\2\2\3\33\3"+
 		"\3\2\2\2\34!\5\6\4\2\35!\5\b\5\2\36!\5\n\6\2\37!\5\f\7\2 \34\3\2\2\2 "+
 		"\35\3\2\2\2 \36\3\2\2\2 \37\3\2\2\2!\5\3\2\2\2\"#\7\3\2\2#&\7\4\2\2$\'"+
-		"\7\5\2\2%\'\7\6\2\2&$\3\2\2\2&%\3\2\2\2\'(\3\2\2\2(\63\7\7\2\2)*\7\26"+
-		"\2\2*\64\7\b\2\2+,\7\27\2\2,\64\7\b\2\2-.\5\b\5\2./\7\b\2\2/\64\3\2\2"+
+		"\7\5\2\2%\'\7\6\2\2&$\3\2\2\2&%\3\2\2\2\'(\3\2\2\2(\63\7\7\2\2)*\7\25"+
+		"\2\2*\64\7\b\2\2+,\7\26\2\2,\64\7\b\2\2-.\5\b\5\2./\7\b\2\2/\64\3\2\2"+
 		"\2\60\61\5\20\t\2\61\62\7\b\2\2\62\64\3\2\2\2\63)\3\2\2\2\63+\3\2\2\2"+
-		"\63-\3\2\2\2\63\60\3\2\2\2\64\7\3\2\2\2\65\66\7\t\2\2\669\7\n\2\2\67:"+
-		"\7\5\2\28:\7\6\2\29\67\3\2\2\298\3\2\2\2:;\3\2\2\2;<\7\4\2\2<=\7\30\2"+
-		"\2=A\7\7\2\2>B\7\26\2\2?B\7\27\2\2@B\5\20\t\2A>\3\2\2\2A?\3\2\2\2A@\3"+
-		"\2\2\2BC\3\2\2\2CS\7\b\2\2DE\7\13\2\2EF\7\4\2\2FG\7\30\2\2GK\7\7\2\2H"+
-		"L\7\26\2\2IL\7\27\2\2JL\5\20\t\2KH\3\2\2\2KI\3\2\2\2KJ\3\2\2\2LM\3\2\2"+
-		"\2MS\7\b\2\2NO\7\f\2\2OP\7\4\2\2PQ\7\30\2\2QS\7\b\2\2R\65\3\2\2\2RD\3"+
-		"\2\2\2RN\3\2\2\2S\t\3\2\2\2TU\7\r\2\2U[\7\16\2\2V\\\5\16\b\2WX\5\16\b"+
-		"\2XY\t\2\2\2YZ\5\16\b\2Z\\\3\2\2\2[V\3\2\2\2[W\3\2\2\2\\]\3\2\2\2]^\7"+
-		"\21\2\2^_\7\b\2\2_`\7\22\2\2`d\7\16\2\2ac\5\4\3\2ba\3\2\2\2cf\3\2\2\2"+
-		"db\3\2\2\2de\3\2\2\2eg\3\2\2\2fd\3\2\2\2gw\7\21\2\2hx\7\b\2\2ij\7\b\2"+
-		"\2ju\7\23\2\2ko\7\16\2\2ln\5\4\3\2ml\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2"+
-		"\2\2pr\3\2\2\2qo\3\2\2\2rs\7\21\2\2sv\7\b\2\2tv\5\n\6\2uk\3\2\2\2ut\3"+
-		"\2\2\2vx\3\2\2\2wh\3\2\2\2wi\3\2\2\2x\13\3\2\2\2yz\7\24\2\2z{\7\16\2\2"+
-		"{|\5\16\b\2|}\7\21\2\2}~\7\b\2\2~\177\7\22\2\2\177\u0083\7\16\2\2\u0080"+
-		"\u0082\5\4\3\2\u0081\u0080\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2"+
-		"\2\2\u0083\u0084\3\2\2\2\u0084\u0086\3\2\2\2\u0085\u0083\3\2\2\2\u0086"+
-		"\u0087\7\21\2\2\u0087\u0088\7\b\2\2\u0088\r\3\2\2\2\u0089\u008c\7\26\2"+
-		"\2\u008a\u008c\5\b\5\2\u008b\u0089\3\2\2\2\u008b\u008a\3\2\2\2\u008c\u008d"+
-		"\3\2\2\2\u008d\u0090\7\25\2\2\u008e\u0091\7\26\2\2\u008f\u0091\5\b\5\2"+
-		"\u0090\u008e\3\2\2\2\u0090\u008f\3\2\2\2\u0091\17\3\2\2\2\u0092\u0095"+
-		"\5\b\5\2\u0093\u0095\7\26\2\2\u0094\u0092\3\2\2\2\u0094\u0093\3\2\2\2"+
-		"\u0095\u0096\3\2\2\2\u0096\u009a\7\25\2\2\u0097\u009b\5\b\5\2\u0098\u009b"+
-		"\7\26\2\2\u0099\u009b\5\20\t\2\u009a\u0097\3\2\2\2\u009a\u0098\3\2\2\2"+
-		"\u009a\u0099\3\2\2\2\u009b\21\3\2\2\2\24\26 &\639AKR[douw\u0083\u008b"+
-		"\u0090\u0094\u009a";
+		"\63-\3\2\2\2\63\60\3\2\2\2\64\7\3\2\2\2\65\66\7\t\2\2\669\7\4\2\2\67:"+
+		"\7\5\2\28:\7\6\2\29\67\3\2\2\298\3\2\2\2:;\3\2\2\2;<\7\4\2\2<=\7\27\2"+
+		"\2=A\7\7\2\2>B\7\25\2\2?B\7\26\2\2@B\5\20\t\2A>\3\2\2\2A?\3\2\2\2A@\3"+
+		"\2\2\2BC\3\2\2\2CS\7\b\2\2DE\7\n\2\2EF\7\4\2\2FG\7\27\2\2GK\7\7\2\2HL"+
+		"\7\26\2\2IL\7\25\2\2JL\5\20\t\2KH\3\2\2\2KI\3\2\2\2KJ\3\2\2\2LM\3\2\2"+
+		"\2MS\7\b\2\2NO\7\13\2\2OP\7\4\2\2PQ\7\27\2\2QS\7\b\2\2R\65\3\2\2\2RD\3"+
+		"\2\2\2RN\3\2\2\2S\t\3\2\2\2TU\7\f\2\2U[\7\r\2\2V\\\5\16\b\2WX\5\16\b\2"+
+		"XY\t\2\2\2YZ\5\16\b\2Z\\\3\2\2\2[V\3\2\2\2[W\3\2\2\2\\]\3\2\2\2]^\7\20"+
+		"\2\2^_\7\b\2\2_`\7\21\2\2`d\7\r\2\2ac\5\4\3\2ba\3\2\2\2cf\3\2\2\2db\3"+
+		"\2\2\2de\3\2\2\2eg\3\2\2\2fd\3\2\2\2gw\7\20\2\2hx\7\b\2\2ij\7\b\2\2ju"+
+		"\7\22\2\2ko\7\r\2\2ln\5\4\3\2ml\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2"+
+		"pr\3\2\2\2qo\3\2\2\2rs\7\20\2\2sv\7\b\2\2tv\5\n\6\2uk\3\2\2\2ut\3\2\2"+
+		"\2vx\3\2\2\2wh\3\2\2\2wi\3\2\2\2x\13\3\2\2\2yz\7\23\2\2z{\7\r\2\2{|\5"+
+		"\16\b\2|}\7\20\2\2}~\7\b\2\2~\177\7\21\2\2\177\u0083\7\r\2\2\u0080\u0082"+
+		"\5\4\3\2\u0081\u0080\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2\2\2\u0083"+
+		"\u0084\3\2\2\2\u0084\u0086\3\2\2\2\u0085\u0083\3\2\2\2\u0086\u0087\7\20"+
+		"\2\2\u0087\u0088\7\b\2\2\u0088\r\3\2\2\2\u0089\u008c\7\25\2\2\u008a\u008c"+
+		"\5\b\5\2\u008b\u0089\3\2\2\2\u008b\u008a\3\2\2\2\u008c\u008d\3\2\2\2\u008d"+
+		"\u0090\7\24\2\2\u008e\u0091\7\25\2\2\u008f\u0091\5\b\5\2\u0090\u008e\3"+
+		"\2\2\2\u0090\u008f\3\2\2\2\u0091\17\3\2\2\2\u0092\u0095\5\b\5\2\u0093"+
+		"\u0095\7\25\2\2\u0094\u0092\3\2\2\2\u0094\u0093\3\2\2\2\u0095\u0096\3"+
+		"\2\2\2\u0096\u009a\7\24\2\2\u0097\u009b\5\b\5\2\u0098\u009b\7\25\2\2\u0099"+
+		"\u009b\5\20\t\2\u009a\u0097\3\2\2\2\u009a\u0098\3\2\2\2\u009a\u0099\3"+
+		"\2\2\2\u009b\21\3\2\2\2\24\26 &\639AKR[douw\u0083\u008b\u0090\u0094\u009a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

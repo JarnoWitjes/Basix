@@ -8,12 +8,12 @@ expression : print
            | loopwhen
            ;
 
-print : 'print' '::' (intT='integer' | stringT='text') '<<' (intV=VALUE ';' | stringV=TEXT ';' | variable ';' | math_expr ';')
+print : 'print' '::' (type='integer' | type='text') '<<' (value=VALUE ';' | value=TEXT ';' | variable ';' | math_expr ';')
       ;
 
-variable : 'make_known'' ::' (intT='integer' | stringT='text') '::' VARIABLE_NAME
-           '<<' (intV=VALUE | stringV=TEXT | math_expr) ';' #DEFVAR
-         | 'remake_known' '::' VARIABLE_NAME '<<' (stringV=VALUE | intV=TEXT | math_expr) ';' #RDEFVAR
+variable : 'make_known' '::' (type='integer' | type='text') '::' VARIABLE_NAME
+           '<<' (value=VALUE | value=TEXT | math_expr) ';' #DEFVAR
+         | 'remake_known' '::' VARIABLE_NAME '<<' (varValue=TEXT | varValue=VALUE | math_expr) ';' #RDEFVAR
          | 'get_known' '::' VARIABLE_NAME ';' #GETVAR
          ;
 

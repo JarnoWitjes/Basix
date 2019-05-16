@@ -102,7 +102,7 @@ public class Compiler {
      * @return       A steam of tokens.
      */
     private CommonTokenStream runLexer( CharStream input ) {
-        BasixGrammarLexer lexer = new BasixGrammarLexer(input);  // TODO: Replace lexer with the one for your own language
+        BasixGrammarLexer lexer = new BasixGrammarLexer(input);
         lexer.addErrorListener(getErrorListener());
         return new CommonTokenStream(lexer);
     }
@@ -114,9 +114,9 @@ public class Compiler {
      * @return        A Parse Tree.
      */
     private ParseTree runParser( CommonTokenStream tokens ) {
-        BasixGrammarParser parser = new BasixGrammarParser(tokens);  // TODO: Replace parser with the one for your own language
+        BasixGrammarParser parser = new BasixGrammarParser(tokens);
         parser.addErrorListener(getErrorListener());
-        return parser.program();       // TODO: Replace .program() with your own start symbol
+        return parser.program();
     }
 
     /**
@@ -163,10 +163,10 @@ public class Compiler {
 
         // Main method
         out.println(".method public static main([Ljava/lang/String;)V");
-        out.println(".limit stack 2");
+        out.println(".limit stack 15");
         out.println(".limit locals 1");  // NOTE: The args-parameter is a local too
         out.println();
-        // TODO : push the rest of the code
+
         for (String s : code) {
             out.println(s);
         }
@@ -238,7 +238,7 @@ public class Compiler {
             if (args.length == 0) {
                 // For testing, you can compile a hard coded string here
                 System.err.println("Compiling hard coded string!");
-                compiler.compileString("BASIX_BEGIN print::text << \"Hello World!\"; BASIX_END", "HelloWorld.j", "HelloWorld.class");
+                compiler.compileString("BASIX_BEGIN make_known::text::myint << \"HAA\"; remake_known::myint << \"OEFF\"; print::text << get_known::myint;; BASIX_END", "HelloWorld.j", "HelloWorld.class");
             } else {
                 // From the source code path, strip off the extension and create file name for the
                 // Jasmin and class file
