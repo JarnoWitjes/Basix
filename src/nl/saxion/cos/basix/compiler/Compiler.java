@@ -238,7 +238,7 @@ public class Compiler {
             if (args.length == 0) {
                 // For testing, you can compile a hard coded string here
                 System.err.println("Compiling hard coded string!");
-                compiler.compileString("BASIX_BEGIN when (10 eq 10 AND 1 gr 0) then (print::text << \"Guess you are a guiniess\";);BASIX_END", "HelloWorld.j", "HelloWorld.class");
+                compiler.compileString("BASIX_BEGIN make_known::integer::i << 0; loop_when (get_known::i; ls 4) then ( print::text << \"HELO!\"; remake_known::i << get_known::i; + 1;); BASIX_END", "HelloWorld.j", "HelloWorld.class");
             } else {
                 // From the source code path, strip off the extension and create file name for the
                 // Jasmin and class file

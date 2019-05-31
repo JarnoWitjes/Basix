@@ -7,7 +7,6 @@ import nl.saxion.cos.basix.grammar.BasixGrammarBaseVisitor;
 import nl.saxion.cos.basix.grammar.BasixGrammarParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,17 +131,21 @@ public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String
             int tableIndex = varSymbol.getIndex();
             String varType = varSymbol.getType();
 
-            // Retrieve the new value and push the new value on the stack and table
-            String nwVarValue = ctx.varValue.getText();
-
-            if (varType.equals("integer")) {
-                code.add("ldc " + nwVarValue);
+            if (ctx.math_expr() != null) { // Check if the new value is result of a math expression
+                code.addAll(visit(ctx.math_expr())); // Generate the math code
                 code.add("istore " + tableIndex);
-            } else if (varType.equals("text")) {
-                code.add("ldc " + nwVarValue);
-                code.add("astore " + tableIndex);
-            }
+            } else {
+                // Retrieve the new value and push the new value on the stack and table
+                String nwVarValue = ctx.varValue.getText();
 
+                if (varType.equals("integer")) {
+                    code.add("ldc " + nwVarValue);
+                    code.add("istore " + tableIndex);
+                } else if (varType.equals("text")) {
+                    code.add("ldc " + nwVarValue);
+                    code.add("astore " + tableIndex);
+                }
+            }
         } catch (SymbolTableException e) {
             System.err.println("Error while finding variable: \'" + varName + "\'");
         }
@@ -220,8 +223,20 @@ public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String
 
     @Override
     public ArrayList<String> visitLoopwhen(BasixGrammarParser.LoopwhenContext ctx) {
-        return super.visitLoopwhen(ctx);
+        ArrayList<String> code = new ArrayList<>();
+
+        code.add("begin" + localsCounter + ":"); // Add begin label of the wile loop
+        code.addAll(visit(ctx.condition)); // Add the condition code
+        code.add("goto endif" + localsCounter); // Go to the end of the loop when condition is false
+        code.add("true" + labelCounter + ":"); // Add label at the beginning of while body
+        code.addAll(generateBlockCode(ctx.loop_body.children, false)); // Add while body statements
+        code.remove(code.size()-1); // Remove the goto endif# piece
+        code.add("goto begin" + labelCounter); // At the end of the statements  go to the beginning
+        code.add("endif" + labelCounter + ":"); // Mark the end of the loop
+
+        return code;
     }
+
 
     @Override
     public ArrayList<String> visitBool_expr(BasixGrammarParser.Bool_exprContext ctx) {

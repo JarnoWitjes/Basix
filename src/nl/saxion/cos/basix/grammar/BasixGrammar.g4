@@ -25,7 +25,7 @@ when : 'when' '(' (condition_single=bool_expr| condition_left=bool_expr (and='AN
 block : '(' expression* ')' ';'
       ;
 
-loopwhen : 'loop_when' '(' bool_expr ')' ';' 'then' '(' expression* ')' ';'
+loopwhen : 'loop_when' '(' condition=bool_expr ')' 'then'  loop_body=block
          ;
 
 bool_expr : ( lVal=VALUE | lVar=variable) operator=OP ( rVal=VALUE | rVar=variable) ;
