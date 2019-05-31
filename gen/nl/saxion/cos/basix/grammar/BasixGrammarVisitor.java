@@ -56,6 +56,12 @@ public interface BasixGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhen(BasixGrammarParser.WhenContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link BasixGrammarParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(BasixGrammarParser.BlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link BasixGrammarParser#loopwhen}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -8,7 +8,7 @@ expression : print
            | loopwhen
            ;
 
-print : 'print' '::' (type='integer' | type='text') '<<' (value=VALUE ';' | value=TEXT ';' | variable ';' | math_expr ';')
+print : 'print' '::' (type='integer' | type='text') '<<' (value=VALUE | value=TEXT | variable | math_expr) ';'
       ;
 
 variable : 'make_known' '::' (type='integer' | type='text') '::' VARIABLE_NAME
@@ -17,9 +17,13 @@ variable : 'make_known' '::' (type='integer' | type='text') '::' VARIABLE_NAME
          | 'get_known' '::' VARIABLE_NAME ';' #GETVAR
          ;
 
-when : 'when' '(' (bool_expr | bool_expr ('AND' | 'OR') bool_expr) ')' ';'
-       'then' '(' expression* ')' (';' | ';' 'otherwise' ('(' expression* ')' ';' | when))
+when : 'when' '(' (condition_single=bool_expr| condition_left=bool_expr (and='AND' | or='OR') condition_right=bool_expr)
+       ')'
+       'then'  if_body=block (('otherwise' else_body=block) | ('test' nested_when=when))*
      ;
+
+block : '(' expression* ')' ';'
+      ;
 
 loopwhen : 'loop_when' '(' bool_expr ')' ';' 'then' '(' expression* ')' ';'
          ;
