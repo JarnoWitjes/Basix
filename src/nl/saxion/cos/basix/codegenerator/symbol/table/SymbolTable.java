@@ -10,13 +10,11 @@ import java.util.ArrayList;
  */
 public class SymbolTable {
 
-    private static SymbolTable instance;
-
     private ArrayList<Symbol> symbols;
 
     /* Constructors */
 
-    private SymbolTable(){
+    public SymbolTable(){
         symbols = new ArrayList<>();
     }
 
@@ -46,16 +44,5 @@ public class SymbolTable {
 
     public int nextIndex() {
         return symbols.size();
-    }
-
-    /* Getters */
-
-    public static SymbolTable getInstance() {
-        if (instance != null) {
-            return instance;
-        } else {
-            instance = new SymbolTable();
-            return instance;
-        }
     }
 }

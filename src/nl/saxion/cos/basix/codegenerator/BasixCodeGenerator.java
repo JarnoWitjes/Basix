@@ -20,11 +20,11 @@ public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String
 
     private SymbolTable symbolTable; // Container holding all the symbols
 
-    private int localsCounter = 0; // Used later to limit the locals to this number
+    public int localsCounter = 0; // Used later to limit the locals to this number
     private int labelCounter = 0; // Used for creating unique labels
 
     public BasixCodeGenerator() {
-        symbolTable = SymbolTable.getInstance();
+        symbolTable = new SymbolTable();
     }
 
     @Override

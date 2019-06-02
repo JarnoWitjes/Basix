@@ -1,6 +1,7 @@
 package nl.saxion.cos.basix.compiler;
 
 import jasmin.ClassFile;
+import nl.saxion.cos.basix.checker.BasixCodeChecker;
 import nl.saxion.cos.basix.codegenerator.BasixCodeGenerator;
 import nl.saxion.cos.basix.grammar.BasixGrammarLexer;
 import nl.saxion.cos.basix.grammar.BasixGrammarParser;
@@ -127,14 +128,14 @@ public class Compiler {
      * @return           True if all code is semantically correct
      */
     private boolean runChecker( ParseTree parseTree ) {
-        // TODO: Create your own checker that inherits from a BaseVisitor, e.g. ExampleLangBaseVisitor.
-        //       Call the visit() method with the parseTree as parameter. In that visitor, you check for
-        //       errors in the source code. Examples of errors you may want to check for:
-        //         - A variable is used before it was declared
-        //         - The user is trying to assign a value to a variable with a different type
-        //         - An if-statement has a condition that is not a boolean
-        //         - An expression mixes values of incompatible data types
-        return true;
+        BasixCodeChecker checker = new BasixCodeChecker();
+        checker.visit(parseTree);
+
+        for (String err : checker.getErrors()) {
+            System.err.println(err);
+        }
+
+        return checker.isClean;
     }
 
     /**
@@ -151,12 +152,6 @@ public class Compiler {
         BasixCodeGenerator codeGenerator = new BasixCodeGenerator();
         ArrayList<String> code = codeGenerator.visit(parseTree);
 
-        // TODO: You will have to create a visitor that visits the parse tree and generates
-        //       code for the nodes in that tree.
-        //       In your case, you will probably want to supply that visitor with the PrintWriter
-        //       created above and emit lines of Jasmin code for the nodes in the parse tree.
-        //       For now, I'll just create a simple template that prints 'Hello world!'
-
         out.println(".class public HelloWorld");
         out.println(".super java/lang/Object");
         out.println();
@@ -164,7 +159,7 @@ public class Compiler {
         // Main method
         out.println(".method public static main([Ljava/lang/String;)V");
         out.println(".limit stack 15");
-        out.println(".limit locals 1");  // NOTE: The args-parameter is a local too
+        out.println(".limit locals " + codeGenerator.localsCounter);  // NOTE: The args-parameter is a local too
         out.println();
 
         for (String s : code) {
@@ -238,7 +233,7 @@ public class Compiler {
             if (args.length == 0) {
                 // For testing, you can compile a hard coded string here
                 System.err.println("Compiling hard coded string!");
-                compiler.compileString("BASIX_BEGIN make_known::integer::i << 0; loop_when (get_known::i; ls 4) then ( print::text << \"HELO!\"; remake_known::i << get_known::i; + 1;); BASIX_END", "HelloWorld.j", "HelloWorld.class");
+                compiler.compileString("BASIX_BEGIN BASIX_END", "HelloWorld.j", "HelloWorld.class");
             } else {
                 // From the source code path, strip off the extension and create file name for the
                 // Jasmin and class file
@@ -255,7 +250,6 @@ public class Compiler {
             }
         }
         catch( IOException | AssembleException e ) {
-            // TODO: Better error handling? ;-)
             e.printStackTrace();
         }
     }
