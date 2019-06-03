@@ -17,16 +17,22 @@ public class BasixScope {
     /* Constructor */
 
     public BasixScope(boolean isGlobalScope, BasixScope upperScope) {
-        if (!isGlobalScope) {
+        if (isGlobalScope) {
             this.upperScope = null;
+            this.isGlobalScope = true;
         } else {
             this.upperScope = upperScope;
+            this.isGlobalScope = false;
         }
 
         this.symbolTable = new SymbolTable();
     }
 
     /* Methods */
+
+    public void addVariable(VariableSymbol varSymbol) {
+        symbolTable.put(varSymbol);
+    }
 
     public VariableSymbol searchVariableSymbol(String variableName) throws BasixScopeException {
         try {
@@ -38,5 +44,9 @@ public class BasixScope {
                 return upperScope.searchVariableSymbol(variableName); // Try find variable in upper scope
             }
         }
+    }
+
+    public int nextTableIndex() {
+        return symbolTable.nextIndex();
     }
 }

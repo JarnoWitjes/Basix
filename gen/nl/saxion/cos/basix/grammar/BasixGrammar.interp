@@ -16,7 +16,7 @@ null
 ')'
 'then'
 'otherwise'
-'test'
+'otherwise test'
 'loop_when'
 null
 null

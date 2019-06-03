@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * Compiles source code in a custom language into Jasmin and then assembles a
  * JVM-compatible .class file.
  *
- * Check the TODO's.
  */
 public class Compiler {
     /**
@@ -135,7 +134,7 @@ public class Compiler {
             System.err.println(err);
         }
 
-        return checker.isClean;
+        return checker.isClean();
     }
 
     /**
@@ -233,7 +232,11 @@ public class Compiler {
             if (args.length == 0) {
                 // For testing, you can compile a hard coded string here
                 System.err.println("Compiling hard coded string!");
-                compiler.compileString("BASIX_BEGIN BASIX_END", "HelloWorld.j", "HelloWorld.class");
+                compiler.compileString("BASIX_BEGIN\n" +
+                        "\n" +
+                        "print::text << get_known::sometext;;\n" +
+                        "\n" +
+                        "BASIX_END", "HelloWorld.j", "HelloWorld.class");
             } else {
                 // From the source code path, strip off the extension and create file name for the
                 // Jasmin and class file

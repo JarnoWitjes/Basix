@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO:
- * - Throw Compiler exceptions
- *
  * @author jarnowitjes on 2019-04-17
  */
 public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String>> {
@@ -230,7 +227,7 @@ public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String
         code.add("goto endif" + localsCounter); // Go to the end of the loop when condition is false
         code.add("true" + labelCounter + ":"); // Add label at the beginning of while body
         code.addAll(generateBlockCode(ctx.loop_body.children, false)); // Add while body statements
-        code.remove(code.size()-1); // Remove the goto endif# piece
+        code.remove(code.size() - 1); // Remove the goto endif# piece
         code.add("goto begin" + labelCounter); // At the end of the statements  go to the beginning
         code.add("endif" + labelCounter + ":"); // Mark the end of the loop
 
@@ -280,7 +277,6 @@ public class BasixCodeGenerator extends BasixGrammarBaseVisitor<ArrayList<String
                 code.add("if_icmpne true" + ++labelCounter);
                 break;
             default:
-                // TODO: Throw compiler exception?
                 break;
         }
         return code;

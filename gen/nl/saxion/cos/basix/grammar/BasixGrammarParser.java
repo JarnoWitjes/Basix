@@ -37,8 +37,8 @@ public class BasixGrammarParser extends Parser {
 		return new String[] {
 			null, "'print'", "'::'", "'integer'", "'text'", "'<<'", "';'", "'make_known'", 
 			"'remake_known'", "'get_known'", "'when'", "'('", "'AND'", "'OR'", "')'", 
-			"'then'", "'otherwise'", "'test'", "'loop_when'", null, null, null, null, 
-			"'BASIX_BEGIN'", "'BASIX_END'"
+			"'then'", "'otherwise'", "'otherwise test'", "'loop_when'", null, null, 
+			null, null, "'BASIX_BEGIN'", "'BASIX_END'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();

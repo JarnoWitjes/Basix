@@ -19,7 +19,7 @@ variable : 'make_known' '::' (type='integer' | type='text') '::' VARIABLE_NAME
 
 when : 'when' '(' (condition_single=bool_expr| condition_left=bool_expr (and='AND' | or='OR') condition_right=bool_expr)
        ')'
-       'then'  if_body=block (('otherwise' else_body=block) | ('test' nested_when=when))*
+       'then'  if_body=block (('otherwise' else_body=block) | ('otherwise test' nested_when=when))*
      ;
 
 block : '(' expression* ')' ';'
